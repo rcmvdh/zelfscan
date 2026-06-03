@@ -24,14 +24,15 @@ const DOM_LABELS = {
   MAN: { houding:'Houding & Mindset', vaardigheden:'Digitale Vaardigheden', kennis:'Kennis & Bewustzijn', ethiek:'Ethiek & Verantwoord Gebruik', ped:'Leiderschapshandelen',               student:'Teamontwikkeling & Beleid' },
 };
 
-const LEVELS = ['A1','A2','B1','B2'];
+const LEVELS = ['A1','A2','B1','B2','C1','C2'];
 
 const LEVEL_INFO = {
-  A1: { name:'Beginner',   color:'#5B8DB8', pct:20 },
-  A2: { name:'Ontdekker',  color:'#3A7BAD', pct:40 },
-  B1: { name:'Toepasser',  color:'#1B5E8A', pct:65 },
-  B2: { name:'Deskundige', color:'#134671', pct:85 },
-  C1: { name:'Kartrekker', color:'#0B2B4E', pct:100 },
+  A1: { name:'Beginner',   color:'#5B8DB8', pct:15 },
+  A2: { name:'Ontdekker',  color:'#3A7BAD', pct:30 },
+  B1: { name:'Toepasser',  color:'#1B5E8A', pct:50 },
+  B2: { name:'Deskundige', color:'#134671', pct:70 },
+  C1: { name:'Kartrekker', color:'#0B2B4E', pct:85 },
+  C2: { name:'Pionier',    color:'#030D1A', pct:100 },
 };
 
 // ─── VRAGEN ────────────────────────────────────────────────────────────────
@@ -51,6 +52,8 @@ OP: {
     { lv:'A2', inv:false, t:'Als er een nieuwe digitale tool beschikbaar komt, probeer ik die zelf eens uit.' },
     { lv:'B1', inv:false, t:'Ik zie het als mijn eigen verantwoordelijkheid om mijn digitale vaardigheden bij te houden, ook buiten verplichte scholing.' },
     { lv:'B2', inv:false, t:'Ik inspireer collega\'s actief door mijn enthousiasme voor digitale vernieuwing te delen.' },
+    { lv:'C1', inv:false, t:'Ik neem het initiatief voor digitale vernieuwing in mijn team en coach collega\'s actief in hun digitale ontwikkeling.' },
+    { lv:'C2', inv:false, t:'Ik experimenteer structureel met nieuwe digitale en AI-toepassingen in het onderwijs en deel mijn bevindingen op schoolniveau of breder.' },
   ],
   vaardigheden: [
     { lv:'A1', inv:false, t:'Ik kan zelfstandig werken met de digitale tools die op school beschikbaar zijn, zoals Teams of Moodle.' },
@@ -58,6 +61,8 @@ OP: {
     { lv:'A2', inv:false, ai:true, t:'Ik gebruik Copilot om mijn werk te ondersteunen, bijvoorbeeld bij het schrijven of samenvatten van teksten.' },
     { lv:'B1', inv:false, t:'Ik kies bewust een digitale tool die past bij het leerdoel van mijn les en pas mijn keuze aan als iets beter werkt.' },
     { lv:'B2', inv:false, t:'Ik gebruik data of digitale tools om mijn lessen te evalueren en structureel te verbeteren.' },
+    { lv:'C1', inv:false, t:'Ik coach collega\'s in het effectief gebruik van Copilot en andere digitale tools en deel concrete werkwijzen die ik zelf heb ontwikkeld.' },
+    { lv:'C2', inv:false, t:'Ik ontwikkel nieuwe digitale leerconcepten of lesontwerpen die door collega\'s of de school worden overgenomen en toegepast.' },
   ],
   kennis: [
     { lv:'A1', inv:false, aiGate:true, t:'Ik weet wat Copilot is en begrijp globaal hoe AI-tools werken.' },
@@ -65,6 +70,8 @@ OP: {
     { lv:'A2', inv:false, ai:true, t:'Ik weet welke AI-tools mijn studenten gebruiken bij het maken van opdrachten.' },
     { lv:'B1', inv:false, t:'Ik weet welke digitale tools door de school zijn goedgekeurd voor gebruik met studentdata.' },
     { lv:'B2', inv:false, ai:true, t:'Ik volg actuele ontwikkelingen op het gebied van AI in het onderwijs goed genoeg om mee te praten over schoolbeleid.' },
+    { lv:'C1', inv:false, t:'Ik heb voldoende kennis van AI-beleidskaders zoals de EU AI Act om een inhoudelijke bijdrage te leveren aan het digitale beleid van de school.' },
+    { lv:'C2', inv:false, t:'Ik volg internationale ontwikkelingen op het gebied van AI in het onderwijs en vertaal deze naar concrete aanbevelingen voor de organisatie.' },
   ],
   ethiek: [
     { lv:'A1', inv:false, t:'Ik voer geen persoonsgegevens van studenten in bij Copilot of andere externe AI-tools.' },
@@ -72,6 +79,8 @@ OP: {
     { lv:'A2', inv:false, t:'Ik bespreek met studenten wat de schoolregels zijn rondom het gebruik van AI bij opdrachten.' },
     { lv:'B1', inv:false, t:'Ik overweeg bewust ethische aspecten zoals bias, auteursrecht en privacy als ik AI inzet in mijn lessen.' },
     { lv:'B2', inv:false, t:'Ik neem actief deel aan het opstellen van afspraken over verantwoord AI-gebruik, ook als docent.' },
+    { lv:'C1', inv:false, t:'Ik neem het voortouw bij het opstellen van ethische richtlijnen voor AI-gebruik binnen mijn team of op schoolniveau.' },
+    { lv:'C2', inv:false, t:'Ik draag actief bij aan het schoolbrede ethische AI-beleid en adviseer leidinggevenden over verantwoorde implementatie.' },
   ],
   ped: [
     { lv:'A1', inv:false, t:'Ik denk na over hoe een digitale tool het leerproces van studenten kan verbeteren, voordat ik hem gebruik.' },
@@ -79,6 +88,8 @@ OP: {
     { lv:'A2', inv:false, t:'Ik pas mijn instructie en werkvorm aan op de digitale tools die ik gebruik in de les.' },
     { lv:'B1', inv:false, t:'Ik gebruik formatieve data, zoals quizresultaten of voortgangsrapportages, om mijn lessen bij te sturen.' },
     { lv:'B2', inv:false, t:'Ik ontwerp opdrachten waarbij studenten zelf actief en creatief met digitale tools aan de slag gaan.' },
+    { lv:'C1', inv:false, t:'Ik ontwerp stelselmatig rijke, digitaal verrijkte leertrajecten en help collega\'s om dit ook te doen.' },
+    { lv:'C2', inv:false, t:'Ik lever een bijdrage aan onderwijsontwikkeling op schoolniveau op het gebied van digitale didactiek en AI-integratie.' },
   ],
   student: [
     { lv:'A1', inv:false, t:'Als een student Copilot of een andere AI-tool verkeerd inzet, spreek ik hem of haar daarop aan.' },
@@ -86,6 +97,8 @@ OP: {
     { lv:'A2', inv:false, t:'Ik leer studenten hoe ze online bronnen kunnen beoordelen op betrouwbaarheid.' },
     { lv:'B1', inv:false, t:'Ik bouw in mijn lessen bewust momenten in waarbij studenten digitale vaardigheden oefenen.' },
     { lv:'B2', inv:false, t:'Ik bereid studenten gericht voor op de digitale werkelijkheid van hun beroep, inclusief verantwoord gebruik van AI.' },
+    { lv:'C1', inv:false, t:'Ik ontwikkel bewust leeractiviteiten die studenten voorbereiden op de digitale beroepspraktijk, inclusief ethisch en kritisch AI-gebruik, en deel deze met collega\'s.' },
+    { lv:'C2', inv:false, t:'Ik fungeer als expertbron voor collega\'s bij het ontwerpen van beroepsrelevante digitale leerroutes en draag hieraan bij op organisatieniveau.' },
   ],
 },
 
@@ -99,6 +112,8 @@ DOP: {
     { lv:'A2', inv:false, t:'Als ik een nieuwe digitale tool tegenkom die de begeleiding kan verbeteren, probeer ik die zelf uit.' },
     { lv:'B1', inv:false, t:'Ik zie het als mijn verantwoordelijkheid om mijn digitale vaardigheden bij te houden voor mijn begeleidingsrol.' },
     { lv:'B2', inv:false, t:'Ik deel mijn ervaringen met digitale tools actief met collega\'s om samen beter te worden.' },
+    { lv:'C1', inv:false, t:'Ik neem het initiatief in mijn team op het gebied van digitale werkwijzen en coach collega\'s actief in hun digitale ontwikkeling.' },
+    { lv:'C2', inv:false, t:'Ik experimenteer actief met nieuwe digitale tools voor begeleiding en deel mijn inzichten structureel met het bredere team of de school.' },
   ],
   vaardigheden: [
     { lv:'A1', inv:false, t:'Ik kan zelfstandig werken met de digitale begeleidingssystemen van de school, zoals Teams, Moodle of Osiris.' },
@@ -106,6 +121,8 @@ DOP: {
     { lv:'A2', inv:false, ai:true, t:'Ik gebruik Copilot om begeleidingsteksten te schrijven of informatie snel op te zoeken.' },
     { lv:'B1', inv:false, t:'Ik gebruik digitale tools gericht om begeleidingsgesprekken voor te bereiden of voortgang te monitoren.' },
     { lv:'B2', inv:false, t:'Ik gebruik data uit Osiris structureel om de begeleiding van studenten te verbeteren.' },
+    { lv:'C1', inv:false, t:'Ik coach collega\'s in het gebruik van digitale begeleidingssystemen en help hen effectiever te werken met tools zoals Osiris en Copilot.' },
+    { lv:'C2', inv:false, t:'Ik ontwikkel nieuwe digitale begeleidingsconcepten of werkwijzen die breed worden toegepast binnen de organisatie.' },
   ],
   kennis: [
     { lv:'A1', inv:false, aiGate:true, t:'Ik weet wat Copilot is en begrijp globaal hoe AI-tools werken.' },
@@ -113,6 +130,8 @@ DOP: {
     { lv:'A2', inv:false, ai:true, t:'Ik weet welke digitale tools studenten en docenten op onze school gebruiken.' },
     { lv:'B1', inv:false, t:'Ik weet welke digitale systemen zijn goedgekeurd voor gebruik met studentdata.' },
     { lv:'B2', inv:false, ai:true, t:'Ik ken de actuele ontwikkelingen in digitale begeleiding goed genoeg om collega\'s te informeren.' },
+    { lv:'C1', inv:false, t:'Ik heb diepgaande kennis van digitale ontwikkelingen in studentbegeleiding en word door collega\'s als vraagbaak gezien.' },
+    { lv:'C2', inv:false, t:'Ik volg landelijke en internationale trends in digitale begeleiding en vertaal die naar concrete verbetervoorstellen voor de organisatie.' },
   ],
   ethiek: [
     { lv:'A1', inv:false, t:'Ik voer geen persoonsgegevens van studenten in bij Copilot of andere externe AI-tools.' },
@@ -120,6 +139,8 @@ DOP: {
     { lv:'A2', inv:false, t:'Ik weet hoe ik veilig en privacyvriendelijk omga met studentgegevens in digitale systemen.' },
     { lv:'B1', inv:false, t:'Ik overweeg bewust de privacy en ethische aspecten als ik AI of data gebruik in de begeleiding.' },
     { lv:'B2', inv:false, t:'Ik draag actief bij aan afspraken over veilig datagebruik, ook in mijn begeleidingsrol.' },
+    { lv:'C1', inv:false, t:'Ik neem het voortouw bij het formuleren van richtlijnen voor verantwoord datagebruik in de begeleiding.' },
+    { lv:'C2', inv:false, t:'Ik draag actief bij aan schoolbrede privacybeleid en adviseer over ethisch gebruik van digitale data in begeleidingsprocessen.' },
   ],
   ped: [
     { lv:'A1', inv:false, t:'Ik denk na over hoe een digitale tool de begeleiding van studenten concreet kan verbeteren.' },
@@ -127,6 +148,8 @@ DOP: {
     { lv:'A2', inv:false, t:'Ik pas mijn begeleidingsaanpak aan op de digitale behoeften van de individuele student.' },
     { lv:'B1', inv:false, t:'Ik gebruik voortgangsdata om gerichte begeleiding te geven die aansluit bij de actuele situatie van de student.' },
     { lv:'B2', inv:false, t:'Ik ontwerp begeleidingsstructuren waarbij studenten tegelijk digitale zelfredzaamheid ontwikkelen.' },
+    { lv:'C1', inv:false, t:'Ik ontwerp structureel begeleidingsaanpakken die digitale zelfredzaamheid van studenten bevorderen en help collega\'s dit te implementeren.' },
+    { lv:'C2', inv:false, t:'Ik draag bij aan de ontwikkeling van organisatiebrede digitale begeleidingsstandaarden en best practices.' },
   ],
   student: [
     { lv:'A1', inv:false, t:'Als een student vastloopt met een digitaal systeem of tool, help ik hem of haar op weg.' },
@@ -134,6 +157,8 @@ DOP: {
     { lv:'A2', inv:false, t:'Ik stimuleer studenten om zelf oplossingen te zoeken bij digitale problemen, in plaats van het over te nemen.' },
     { lv:'B1', inv:false, t:'Ik bouw in mijn begeleiding bewust momenten in waarbij studenten digitale vaardigheden oefenen.' },
     { lv:'B2', inv:false, t:'Ik bereid studenten voor op de digitale werkpraktijk van hun toekomstige beroep.' },
+    { lv:'C1', inv:false, t:'Ik ontwikkel gerichte programma\'s of interventies die studenten structureel voorbereiden op digitale zelfredzaamheid in hun beroep.' },
+    { lv:'C2', inv:false, t:'Ik fungeer als expertbron voor de organisatie op het gebied van digitale zelfredzaamheid van studenten en draag bij aan beleid en scholing.' },
   ],
 },
 
@@ -147,6 +172,8 @@ IOP: {
     { lv:'A2', inv:false, t:'Als de school een nieuw digitaal systeem introduceert, ga ik er zelf actief mee aan de slag.' },
     { lv:'B1', inv:false, t:'Ik zie het als mijn eigen verantwoordelijkheid om mijn digitale vaardigheden bij te houden, ook buiten verplichte training.' },
     { lv:'B2', inv:false, t:'Ik deel mijn digitale kennis actief met collega\'s om samen efficiënter te werken.' },
+    { lv:'C1', inv:false, t:'Ik neem het initiatief bij digitale vernieuwing in mijn afdeling en coach collega\'s actief bij hun digitale ontwikkeling.' },
+    { lv:'C2', inv:false, t:'Ik experimenteer structureel met nieuwe digitale werkwijzen en AI-toepassingen en deel mijn inzichten actief met de organisatie.' },
   ],
   vaardigheden: [
     { lv:'A1', inv:false, t:'Ik kan zelfstandig werken met de digitale systemen die voor mijn functie beschikbaar zijn.' },
@@ -154,6 +181,8 @@ IOP: {
     { lv:'A2', inv:false, ai:true, t:'Ik gebruik Copilot om terugkerende taken sneller te doen, zoals teksten schrijven of samenvatten.' },
     { lv:'B1', inv:false, t:'Ik automatiseer terugkerende digitale taken om mijn werk efficiënter te maken.' },
     { lv:'B2', inv:false, t:'Ik bouw rapportages of dashboards om mijn werkresultaten inzichtelijk te maken voor collega\'s of leidinggevenden.' },
+    { lv:'C1', inv:false, t:'Ik coach collega\'s in efficiënt gebruik van digitale tools en help processen te optimaliseren door mijn kennis actief te delen.' },
+    { lv:'C2', inv:false, t:'Ik ontwerp nieuwe digitale werkprocessen of automatiseringen die organisatiebreed worden ingezet.' },
   ],
   kennis: [
     { lv:'A1', inv:false, aiGate:true, t:'Ik weet dat Copilot en andere AI-tools bestaan en begrijp globaal wat ze doen.' },
@@ -161,6 +190,8 @@ IOP: {
     { lv:'A2', inv:false, t:'Ik weet wat phishing is en hoe ik een verdachte e-mail herken.' },
     { lv:'B1', inv:false, t:'Ik ken het privacybeleid van de school goed genoeg om veilig met gevoelige gegevens te werken.' },
     { lv:'B2', inv:false, t:'Ik ken de relevante wet- en regelgeving, zoals de AVG en NIS2, die van toepassing is op mijn werk.' },
+    { lv:'C1', inv:false, t:'Ik ben voor mijn team de inhoudelijke vraagbaak op het gebied van relevante wet- en regelgeving zoals AVG en NIS2.' },
+    { lv:'C2', inv:false, t:'Ik volg actief nationale en Europese beleidsontwikkelingen op digitaal gebied en vertaal die naar strategisch advies voor de organisatie.' },
   ],
   ethiek: [
     { lv:'A1', inv:false, t:'Ik gebruik sterke, unieke wachtwoorden voor mijn werkaccounts.' },
@@ -168,6 +199,8 @@ IOP: {
     { lv:'A2', inv:false, t:'Ik gebruik tweestapsverificatie (2FA) op mijn werkaccounts.' },
     { lv:'B1', inv:false, t:'Ik denk bewust na over de privacy-implicaties voordat ik gegevens deel of invoer in een digitaal systeem.' },
     { lv:'B2', inv:false, t:'Ik adviseer collega\'s actief over veilig en ethisch gebruik van digitale tools en AI.' },
+    { lv:'C1', inv:false, t:'Ik neem het voortouw in mijn team bij het opstellen en implementeren van richtlijnen voor digitale veiligheid en privacy.' },
+    { lv:'C2', inv:false, t:'Ik lever een structurele bijdrage aan het organisatiebrede beleid voor digitale veiligheid, privacy en ethisch AI-gebruik.' },
   ],
   ped: [
     { lv:'A1', inv:false, t:'Ik gebruik digitale tools actief om mijn werkprocessen te ondersteunen en te verbeteren.' },
@@ -175,6 +208,8 @@ IOP: {
     { lv:'A2', inv:false, t:'Als ik verbeterpunten zie in een digitaal werkproces, deel ik die met mijn leidinggevende of collega\'s.' },
     { lv:'B1', inv:false, t:'Ik neem initiatief bij het verbeteren van digitale werkprocessen in mijn team of afdeling.' },
     { lv:'B2', inv:false, t:'Ik leid of coördineer verbeterprojecten op het gebied van digitale systemen of werkprocessen.' },
+    { lv:'C1', inv:false, t:'Ik leid verbeterprojecten op digitaal gebied en coach collega\'s bij de implementatie van nieuwe digitale werkwijzen.' },
+    { lv:'C2', inv:false, t:'Ik ontwerp en implementeer strategische digitale verbetertrajecten die een duurzame impact hebben op de organisatie.' },
   ],
   student: [
     { lv:'A1', inv:false, t:'Als een collega vastloopt met een digitaal systeem, help ik hem of haar op weg.' },
@@ -182,6 +217,8 @@ IOP: {
     { lv:'A2', inv:false, t:'Ik deel handige digitale werkwijzen en tips actief met collega\'s.' },
     { lv:'B1', inv:false, t:'Ik draag actief bij aan de digitale ontwikkeling van mijn team of afdeling.' },
     { lv:'B2', inv:false, t:'Ik vertaal digitale inzichten en data naar concrete verbetervoorstellen voor de organisatie.' },
+    { lv:'C1', inv:false, t:'Ik fungeer als vraagbaak voor collega\'s op het gebied van digitale werkwijzen en initieer structureel kennis- en leermomenten in het team.' },
+    { lv:'C2', inv:false, t:'Ik lever een bijdrage aan de digitale visie en strategie van de organisatie door inzichten te vertalen naar beleid en concrete acties.' },
   ],
 },
 
@@ -195,6 +232,8 @@ MAN: {
     { lv:'A2', inv:false, t:'Ik ben zelf nieuwsgierig naar de digitale mogelijkheden die voor mijn team beschikbaar zijn.' },
     { lv:'B1', inv:false, t:'Ik zet mij actief in voor digitale professionalisering binnen mijn team.' },
     { lv:'B2', inv:false, t:'Ik creëer een cultuur waarin medewerkers worden gestimuleerd om digitaal te groeien en te experimenteren.' },
+    { lv:'C1', inv:false, t:'Ik zet mij actief in voor een cultuur van digitaal leren en experimenteren in mijn team en draag dit uit naar de bredere organisatie.' },
+    { lv:'C2', inv:false, t:'Ik ben een drijvende kracht achter de digitale transformatie van de organisatie en inspireer andere leidinggevenden door mijn voorbeeldgedrag.' },
   ],
   vaardigheden: [
     { lv:'A1', inv:false, t:'Ik kan zelfstandig werken met de digitale management- en communicatietools van de school.' },
@@ -202,6 +241,8 @@ MAN: {
     { lv:'A2', inv:false, ai:true, t:'Ik gebruik Copilot om managementtaken te ondersteunen, bijvoorbeeld bij het schrijven van beleids- of rapportageteksten.' },
     { lv:'B1', inv:false, t:'Ik gebruik data en rapportages structureel om beslissingen te onderbouwen.' },
     { lv:'B2', inv:false, t:'Ik maak gebruik van digitale dashboards of analyses om de voortgang en het welzijn van mijn team te monitoren.' },
+    { lv:'C1', inv:false, t:'Ik gebruik geavanceerde digitale dashboards en analyses structureel om strategische beslissingen te onderbouwen en het team bij te sturen.' },
+    { lv:'C2', inv:false, t:'Ik ontwikkel en implementeer digitale strategieën die de gehele organisatie raken en koppel deze aan concrete kwaliteitsverbeteringen.' },
   ],
   kennis: [
     { lv:'A1', inv:false, aiGate:true, t:'Ik weet welke AI-tools zoals Copilot, ChatGPT of Claude zijn en begrijp globaal hoe ze werken.' },
@@ -209,6 +250,8 @@ MAN: {
     { lv:'A2', inv:false, t:'Ik weet wat de NIS2-richtlijn van onze organisatie verplicht op het gebied van digitale veiligheid.' },
     { lv:'B1', inv:false, ai:true, t:'Ik weet welke AI-systemen als \'hoog risico\' worden geclassificeerd onder de EU AI Act en wat dit van ons vraagt.' },
     { lv:'B2', inv:false, ai:true, t:'Ik ken de actuele digitale en AI-beleidskaders goed genoeg om strategische keuzes te onderbouwen.' },
+    { lv:'C1', inv:false, t:'Ik heb diepgaande kennis van de EU AI Act, NIS2 en het nationale beleidskader AI in het MBO en gebruik deze kennis om strategische keuzes te onderbouwen.' },
+    { lv:'C2', inv:false, t:'Ik lever een actieve bijdrage aan het sectorale of nationale debat over AI in het onderwijs en fungeer als expert voor de organisatie.' },
   ],
   ethiek: [
     { lv:'A1', inv:false, t:'Ik ben me bewust van de digitale risico\'s, zoals datalekken of phishing, die onze organisatie raken.' },
@@ -216,6 +259,8 @@ MAN: {
     { lv:'A2', inv:false, t:'Ik zorg dat cybersecurity en privacybescherming geborgd zijn in het beleid en de afspraken van mijn team.' },
     { lv:'B1', inv:false, t:'Ik bespreek digitale veiligheidsincidenten en risico\'s structureel met mijn team.' },
     { lv:'B2', inv:false, t:'Ik veranker ethische richtlijnen voor AI-gebruik in het beleid van mijn afdeling.' },
+    { lv:'C1', inv:false, t:'Ik draag zorg voor een integrale ethische aanpak van AI en digitalisering in mijn afdeling, verankerd in beleid en werkafspraken.' },
+    { lv:'C2', inv:false, t:'Ik positioneer de organisatie als verantwoorde AI-gebruiker door intern en extern een toonaangevende rol te spelen in ethisch AI-beleid.' },
   ],
   ped: [
     { lv:'A1', inv:false, t:'Ik stimuleer medewerkers actief om digitale tools en Copilot te leren gebruiken.' },
@@ -223,6 +268,8 @@ MAN: {
     { lv:'A2', inv:false, t:'Ik creëer ruimte in het werkschema voor medewerkers om digitale vaardigheden te ontwikkelen.' },
     { lv:'B1', inv:false, t:'Ik begeleid digitale verandering in mijn team en verbind dit aan de professionele cultuur en het vakmanschap van medewerkers.' },
     { lv:'B2', inv:false, t:'Ik leg in mijn jaarplan verantwoording af over digitale strategie, AI-governance en medewerkerswelzijn.' },
+    { lv:'C1', inv:false, t:'Ik begeleid meerdere digitale verandertrajecten tegelijkertijd en verbind deze aan de strategische ambities van de organisatie.' },
+    { lv:'C2', inv:false, t:'Ik ontwikkel en implementeer een meerjarige digitale strategie voor mijn afdeling, inclusief governance, talentontwikkeling en innovatiebeleid.' },
   ],
   student: [
     { lv:'A1', inv:false, t:'Ik ben op de hoogte van de digitale werkdruk in mijn team en bespreek dit in overleggen.' },
@@ -230,6 +277,8 @@ MAN: {
     { lv:'A2', inv:false, t:'Ik evalueer structureel welke digitale tools mijn team gebruikt en of ze daadwerkelijk bijdragen.' },
     { lv:'B1', inv:false, t:'Ik betrek medewerkers actief bij het verbeteren van digitale werkprocessen in mijn team.' },
     { lv:'B2', inv:false, t:'Ik gebruik HR-data en leerdata structureel om het beleid voor mijn team te verbeteren en bij te sturen.' },
+    { lv:'C1', inv:false, t:'Ik gebruik HR- en leerdata structureel om gerichte interventies te ontwerpen die de digitale ontwikkeling van het team versnellen.' },
+    { lv:'C2', inv:false, t:'Ik draag bij aan de organisatiebrede digitale HR-strategie en lever input voor de langetermijnvisie op digitale talentontwikkeling.' },
   ],
 },
 }; // einde Q
@@ -608,24 +657,25 @@ const GROWTH = {
   B1:'Jij past digitale vaardigheden al doelgericht toe en denkt bewust na over het waarom achter je keuzes. Dat is een teken van professionele groei. Je bent een waardevolle schakel voor collega\'s om je heen.',
   B2:'Indrukwekkend. Jij bent een echte digitale professional! Je deelt je kennis met anderen en draagt actief bij aan de digitale kwaliteit in je team. Een drijvende kracht in de organisatie.',
   C1:'Jij bent een kartrekker op het digitale vlak. Je verbindt mensen, beleid en technologie en maakt daarmee het verschil voor de hele organisatie. Jouw bijdrage reikt verder dan je eigen afdeling.',
+  C2:'Uitzonderlijk. Jij bent een digitale pionier. Je creëert nieuwe mogelijkheden, zet de koers voor anderen en draagt bij aan de digitale toekomst van onderwijs en organisatie. Jouw expertise heeft impact ver buiten je eigen domein.',
 };
 
 const D_DESC = {
-  houding:{A1:'Je staat open voor digitale ontwikkeling. Dat is het fundament voor alles dat volgt.',A2:'Je bent nieuwsgierig en durft te experimenteren. Heel goed!',B1:'Je neemt zelf verantwoordelijkheid voor je digitale groei. Professioneel!',B2:'Je inspireert anderen. Een echte digitale cultuurdrager.'},
-  vaardigheden:{A1:'Je beheerst de basistools van je werk. Goed fundament!',A2:'Je gebruikt Copilot en andere AI-tools actief in je werk.',B1:'Je maakt bewuste, doelgerichte keuzes in je digitale toolkit.',B2:'Je gebruikt data en digitale tools om structureel te verbeteren.'},
-  kennis:{A1:'Je kent de basics van Copilot en AI. Een goed vertrekpunt.',A2:'Je weet wat er speelt op school en in het onderwijs rond AI.',B1:'Je kennis is up-to-date genoeg om veilig en verantwoord te werken.',B2:'Je volgt ontwikkelingen goed genoeg om mee te praten over beleid.'},
-  ethiek:{A1:'Je handelt bewust op het gebied van veiligheid en privacy. Goed!',A2:'Je bespreekt en bewaakt verantwoord gebruik in je omgeving.',B1:'Je overweegt actief de ethische kant van digitale en AI-keuzes.',B2:'Je draagt bij aan een ethische digitale cultuur in je team.'},
-  ped:{A1:'Je denkt na over het effect van digitale tools op jouw werk.',A2:'Je past je aanpak aan op de digitale context. Bewust en effectief.',B1:'Je maakt data en voortgang leidend in je handelen.',B2:'Je ontwerpt structureel rijke digitale werk- en leerprocessen.'},
-  student:{A1:'Je bent aanspreekbaar op digitale kwesties voor studenten of collega\'s.',A2:'Je stimuleert zelfredzaamheid actief. Waardevol!',B1:'Je integreert digitale vaardigheidsontwikkeling bewust in je werk.',B2:'Je bereidt anderen voor op de digitale toekomst van hun beroep.'},
+  houding:{A1:'Je staat open voor digitale ontwikkeling. Dat is het fundament voor alles dat volgt.',A2:'Je bent nieuwsgierig en durft te experimenteren. Heel goed!',B1:'Je neemt zelf verantwoordelijkheid voor je digitale groei. Professioneel!',B2:'Je inspireert anderen. Een echte digitale cultuurdrager.',C1:'Je coacht en karttrekt. Jouw houding zet de toon voor het hele team.',C2:'Je bent een pionier. Je vernieuwt, deelt en hebt organisatiebrede impact.'},
+  vaardigheden:{A1:'Je beheerst de basistools van je werk. Goed fundament!',A2:'Je gebruikt Copilot en andere AI-tools actief in je werk.',B1:'Je maakt bewuste, doelgerichte keuzes in je digitale toolkit.',B2:'Je gebruikt data en digitale tools om structureel te verbeteren.',C1:'Je deelt je expertise actief en helpt collega\'s beter worden.',C2:'Je ontwikkelt nieuwe digitale concepten die anderen overnemen.'},
+  kennis:{A1:'Je kent de basics van Copilot en AI. Een goed vertrekpunt.',A2:'Je weet wat er speelt op school en in het onderwijs rond AI.',B1:'Je kennis is up-to-date genoeg om veilig en verantwoord te werken.',B2:'Je volgt ontwikkelingen goed genoeg om mee te praten over beleid.',C1:'Je kennis is diepgaand genoeg om beleid te voeden en anderen te adviseren.',C2:'Je bent een toonaangevende expert op het gebied van AI en digitalisering.'},
+  ethiek:{A1:'Je handelt bewust op het gebied van veiligheid en privacy. Goed!',A2:'Je bespreekt en bewaakt verantwoord gebruik in je omgeving.',B1:'Je overweegt actief de ethische kant van digitale en AI-keuzes.',B2:'Je draagt bij aan een ethische digitale cultuur in je team.',C1:'Je neemt het voortouw in ethische richtlijnen en draagt die actief uit.',C2:'Je bent architect van de ethische digitale cultuur van de organisatie.'},
+  ped:{A1:'Je denkt na over het effect van digitale tools op jouw werk.',A2:'Je past je aanpak aan op de digitale context. Bewust en effectief.',B1:'Je maakt data en voortgang leidend in je handelen.',B2:'Je ontwerpt structureel rijke digitale werk- en leerprocessen.',C1:'Je ontwerpt én deelt rijke digitale aanpakken — ook voor en met collega\'s.',C2:'Je levert een bijdrage aan de digitale kwaliteitsvisie van de organisatie.'},
+  student:{A1:'Je bent aanspreekbaar op digitale kwesties voor studenten of collega\'s.',A2:'Je stimuleert zelfredzaamheid actief. Waardevol!',B1:'Je integreert digitale vaardigheidsontwikkeling bewust in je werk.',B2:'Je bereidt anderen voor op de digitale toekomst van hun beroep.',C1:'Je ontwikkelt gerichte programma\'s voor digitale groei van anderen.',C2:'Je bent organisatiebrede expertbron voor digitale talentontwikkeling.'},
 };
 
 const D_NEXT = {
-  houding:{A1:'Bespreek eens met een collega welke digitale tool hij of zij echt handig vindt. Laat je inspireren.',A2:'Zoek een collega die verder is op het digitale vlak en kijk een uurtje mee.',B1:'Deel je aanpak in een team- of werkoverleg. Andere collega\'s leren van jouw houding.',B2:'Neem het initiatief voor een digitale inspiratiemiddag of kennisdeelsessie in je team.'},
-  vaardigheden:{A1:'Probeer deze week één taak te doen met Copilot, bijv. een e-mail schrijven of een tekst samenvatten.',A2:'Verken hoe je Copilot nog slimmer kunt inzetten: stel followup-vragen en vergelijk uitkomsten.',B1:'Experimenteer met een nieuw digitaal hulpmiddel dat je werk nog effectiever maakt.',B2:'Deel een concrete werkwijze of tool met je team via een korte demo of instructie.'},
-  kennis:{A1:'Lees de privacyregels van je school over het gebruik van AI-tools. Vijf minuten, grote winst.',A2:'Zet een Google Alert op "AI onderwijs" of "Copilot MBO" om makkelijk bij te blijven.',B1:'Verdiep je in de EU AI Act. Zoek een korte uitleg online of vraag de ICT-afdeling om een briefing.',B2:'Schrijf mee aan een beleidsnota of geef input bij de ontwikkeling van digitale kaders op school.'},
-  ethiek:{A1:'Controleer of jij 2FA aan hebt staan op je werkaccounts. Duurt twee minuten.',A2:'Stel een collega de vraag: "Weet jij wat wij wel en niet in Copilot mogen invoeren?" Gebruik het als gespreksstarter.',B1:'Neem het voortouw bij het opstellen of actualiseren van AI-gebruiksafspraken voor jouw team.',B2:'Schrijf mee aan de ethische richtlijnen voor AI-gebruik op schoolniveau.'},
-  ped:{A1:'Koppel je volgende keuze voor een digitale werkvorm bewust aan een leerdoel. Schrijf het op.',A2:'Vraag studenten of collega\'s om feedback op jouw digitale aanpak. Gebruik die input.',B1:'Stel een concrete data-gedreven vraag: wat zegt de voortgang van studenten over jouw aanpak?',B2:'Ontwerp een werkvorm waarbij anderen actief en creatief met digitale tools aan de slag gaan.'},
-  student:{A1:'Vraag eens aan een student welke digitale tools hij of zij gebruikt en waarom. Leer van hun perspectief.',A2:'Voeg één concrete oefening toe aan je werk waarbij anderen zelf een digitaal probleem oplossen.',B1:'Maak het expliciet: benoem welke digitale vaardigheid je wilt helpen ontwikkelen en hoe.',B2:'Verbind jouw aanpak aan de beroepspraktijk: wat moeten studenten of medewerkers echt kunnen?'},
+  houding:{A1:'Bespreek eens met een collega welke digitale tool hij of zij echt handig vindt. Laat je inspireren.',A2:'Zoek een collega die verder is op het digitale vlak en kijk een uurtje mee.',B1:'Deel je aanpak in een team- of werkoverleg. Andere collega\'s leren van jouw houding.',B2:'Neem het initiatief voor een digitale inspiratiemiddag of kennisdeelsessie in je team.',C1:'Organiseer een leernetwerk of intervisiegroep rondom digitale ontwikkeling in jouw school of sector.',C2:'Presenteer je aanpak op een congres, schrijf een artikel of draag bij aan een sectorinitiatief over digitale vaardigheden.'},
+  vaardigheden:{A1:'Probeer deze week één taak te doen met Copilot, bijv. een e-mail schrijven of een tekst samenvatten.',A2:'Verken hoe je Copilot nog slimmer kunt inzetten: stel followup-vragen en vergelijk uitkomsten.',B1:'Experimenteer met een nieuw digitaal hulpmiddel dat je werk nog effectiever maakt.',B2:'Deel een concrete werkwijze of tool met je team via een korte demo of instructie.',C1:'Bied een collega een concrete coachingssessie aan rondom Copilot of een ander digitaal instrument.',C2:'Documenteer jouw werkwijze als best practice en deel deze actief met de organisatie of sector.'},
+  kennis:{A1:'Lees de privacyregels van je school over het gebruik van AI-tools. Vijf minuten, grote winst.',A2:'Zet een Google Alert op "AI onderwijs" of "Copilot MBO" om makkelijk bij te blijven.',B1:'Verdiep je in de EU AI Act. Zoek een korte uitleg online of vraag de ICT-afdeling om een briefing.',B2:'Schrijf mee aan een beleidsnota of geef input bij de ontwikkeling van digitale kaders op school.',C1:'Schrijf mee aan een beleidsdocument of geef input bij digitale kaders op school of sectorniveau.',C2:'Engageer je in een sectoraal netwerk of expertgroep rond AI in het onderwijs.'},
+  ethiek:{A1:'Controleer of jij 2FA aan hebt staan op je werkaccounts. Duurt twee minuten.',A2:'Stel een collega de vraag: "Weet jij wat wij wel en niet in Copilot mogen invoeren?" Gebruik het als gespreksstarter.',B1:'Neem het voortouw bij het opstellen of actualiseren van AI-gebruiksafspraken voor jouw team.',B2:'Schrijf mee aan de ethische richtlijnen voor AI-gebruik op schoolniveau.',C1:'Neem het initiatief voor een schoolbrede sessie over verantwoord AI-gebruik en stel concrete afspraken op.',C2:'Draag actief bij aan de ontwikkeling van nationale of sectorale richtlijnen voor AI-gebruik in het onderwijs.'},
+  ped:{A1:'Koppel je volgende keuze voor een digitale werkvorm bewust aan een leerdoel. Schrijf het op.',A2:'Vraag studenten of collega\'s om feedback op jouw digitale aanpak. Gebruik die input.',B1:'Stel een concrete data-gedreven vraag: wat zegt de voortgang van studenten over jouw aanpak?',B2:'Ontwerp een werkvorm waarbij anderen actief en creatief met digitale tools aan de slag gaan.',C1:'Ontwikkel een methodiek of aanpak en deel die structureel met collega\'s via een leernetwerk.',C2:'Publiceer je aanpak of presenteer het extern als voorbeeld van digitaal vakmanschap.'},
+  student:{A1:'Vraag eens aan een student welke digitale tools hij of zij gebruikt en waarom. Leer van hun perspectief.',A2:'Voeg één concrete oefening toe aan je werk waarbij anderen zelf een digitaal probleem oplossen.',B1:'Maak het expliciet: benoem welke digitale vaardigheid je wilt helpen ontwikkelen en hoe.',B2:'Verbind jouw aanpak aan de beroepspraktijk: wat moeten studenten of medewerkers echt kunnen?',C1:'Ontwikkel een programma of interventie gericht op beroepsrelevante digitale vaardigheden en deel dat met collega\'s.',C2:'Lever input aan de organisatie over digitale beroepsvoorbereiding als onderdeel van beleid of curriculumontwikkeling.'},
 };
 
 // ─── STATE ─────────────────────────────────────────────────────────────────
@@ -646,7 +696,11 @@ function buildQ(role) {
   doms.forEach(d => { const q = Q[role][d].find(q=>q.lv==='B1'); if(q) out.push({dom:d,...q}); });
   // Groep B2
   doms.forEach(d => { const q = Q[role][d].find(q=>q.lv==='B2'); if(q) out.push({dom:d,...q}); });
-  return out; // 1 + 11 + 6 + 6 + 6 = 30
+  // Groep C1
+  doms.forEach(d => { const q = Q[role][d].find(q=>q.lv==='C1'); if(q) out.push({dom:d,...q}); });
+  // Groep C2
+  doms.forEach(d => { const q = Q[role][d].find(q=>q.lv==='C2'); if(q) out.push({dom:d,...q}); });
+  return out; // 1 + 11 + 6 + 6 + 6 + 6 + 6 = 42
 }
 
 // ─── DOMAIN TINTS ──────────────────────────────────────────────────────────
@@ -948,7 +1002,7 @@ function buildReport() {
     kqSub.textContent=`${S.kqOk} van de ${S.kqTotal} kennisvragen goed beantwoord.`;
     // Per-domain KQ breakdown
     const kqDomCards=doms.map((k,i)=>{
-      const highest=S.kqResults[k]||'—';
+      const highest=S.kqResults[k]||'niet bereikt';
       const tint=DOM_TINTS[k]||'#B48CC8';
       const label=DOM_LABELS[S.role][k];
       return `<div class="kq-dom-result" style="--theme-tint:${tint}">

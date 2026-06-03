@@ -270,7 +270,7 @@ function renderStellingen(role) {
             return `<tr>
               <td class="stelling-num">${q._seq}</td>
               <td><span class="lv-badge lv-${q.lv}">${q.lv}</span></td>
-              <td style="white-space:nowrap">${flags.join(' ') || '<span style="color:var(--ink-mute)">—</span>'}</td>
+              <td style="white-space:nowrap">${flags.join(' ')}</td>
               <td class="stelling-text">${q.t}</td>
             </tr>`;
           }).join('')}
