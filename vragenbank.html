@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vragenbank – MondriAI Zelfscan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #F8F9FB;
+  --surface: #FFFFFF;
+  --ink: #0B1220;
+  --ink-2: #1F2937;
+  --ink-3: #4B5563;
+  --ink-mute: #6B7280;
+  --line: #E5E7EB;
+  --accent: #B48CC8;
+  --accent-ink: #5B3D7A;
+  --accent-tint: #F3EEF8;
+  --green: #46C891;
+  --green-tint: #EDFAF4;
+  --lv-a1: #DBEAFE; --lv-a1-ink: #1D4ED8;
+  --lv-a2: #BBF7D0; --lv-a2-ink: #15803D;
+  --lv-b1: #FDE68A; --lv-b1-ink: #92400E;
+  --lv-b2: #FECACA; --lv-b2-ink: #991B1B;
+}
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: var(--bg); color: var(--ink);
+  font-size: 14px; line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: #fff; border-bottom: 1px solid var(--line);
+  padding: 0 28px;
+  display: flex; align-items: center; gap: 0;
+}
+.logo { font-size: 15px; font-weight: 700; color: var(--ink); padding: 16px 24px 16px 0; white-space: nowrap; border-right: 1px solid var(--line); margin-right: 4px; }
+.logo span { color: var(--accent-ink); }
+.tab-nav { display: flex; }
+.tab-btn {
+  padding: 17px 20px; font-size: 13px; font-weight: 600;
+  color: var(--ink-mute); cursor: pointer; background: none; border: none;
+  border-bottom: 2px solid transparent; font-family: inherit;
+  transition: color .15s, border-color .15s; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { color: var(--accent-ink); border-bottom-color: var(--accent); }
+
+/* ── ROL SELECTOR BALK ── */
+.role-bar {
+  background: #fff; border-bottom: 1px solid var(--line);
+  padding: 14px 28px; display: flex; align-items: center; gap: 10px;
+}
+.role-bar-label { font-size: 12px; font-weight: 700; color: var(--ink-mute); text-transform: uppercase; letter-spacing: .05em; margin-right: 4px; white-space: nowrap; }
+.role-card-btn {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 10px 16px; border-radius: 10px; cursor: pointer;
+  border: 1.5px solid var(--line); background: var(--bg);
+  font-family: inherit; text-align: left; transition: all .12s; flex: 1; max-width: 220px;
+}
+.role-card-btn:hover { border-color: var(--accent); background: var(--accent-tint); }
+.role-card-btn.active { border-color: var(--accent); background: var(--accent-tint); box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 15%, transparent); }
+.rc-code { font-size: 13px; font-weight: 800; color: var(--accent-ink); letter-spacing: .02em; }
+.rc-name { font-size: 12px; font-weight: 500; color: var(--ink-3); line-height: 1.3; }
+.role-bar.hidden { display: none; }
+
+/* ── LAYOUT ── */
+.page-body { max-width: 1060px; margin: 0 auto; padding: 28px 24px 80px; }
+.section-panel { display: none; }
+.section-panel.active { display: block; }
+
+/* ── PANEL HEADER ── */
+.panel-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 24px; }
+.panel-title { font-size: 20px; font-weight: 800; color: var(--ink); letter-spacing: -.015em; }
+.panel-role-badge {
+  font-size: 13px; font-weight: 700; color: var(--accent-ink);
+  background: var(--accent-tint); border: 1px solid color-mix(in oklab, var(--accent) 30%, white);
+  padding: 3px 12px; border-radius: 999px;
+}
+.panel-count { font-size: 13px; color: var(--ink-mute); }
+
+/* ── DOMAIN BLOCK ── */
+.domain-block { margin-bottom: 36px; }
+.domain-head {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+  padding-bottom: 10px; border-bottom: 2px solid var(--line);
+}
+.domain-icon { font-size: 20px; }
+.domain-title { font-size: 16px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+.domain-count { font-size: 12px; color: var(--ink-mute); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; }
+
+/* ── STELLING TABLE ── */
+.stelling-table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+.stelling-table th {
+  text-align: left; padding: 9px 14px; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .05em; color: var(--ink-mute);
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.stelling-table td { padding: 11px 14px; border-bottom: 1px solid #F3F4F6; vertical-align: middle; }
+.stelling-table tr:last-child td { border-bottom: none; }
+.stelling-table tr:hover td { background: #FAFBFC; }
+.lv-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; border-radius: 6px; padding: 3px 9px; white-space: nowrap;
+}
+.lv-A1 { background: var(--lv-a1); color: var(--lv-a1-ink); }
+.lv-A2 { background: var(--lv-a2); color: var(--lv-a2-ink); }
+.lv-B1 { background: var(--lv-b1); color: var(--lv-b1-ink); }
+.lv-B2 { background: var(--lv-b2); color: var(--lv-b2-ink); }
+.flag { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 700; border-radius: 5px; padding: 2px 7px; white-space: nowrap; }
+.flag-gate { background: #FEF3C7; color: #92400E; }
+.flag-ai   { background: #E0E7FF; color: #3730A3; }
+.stelling-text { color: var(--ink-2); line-height: 1.5; }
+.stelling-num  { font-size: 11px; color: var(--ink-mute); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ── KQ CARDS ── */
+.kq-grid { display: flex; flex-direction: column; gap: 14px; }
+.kq-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+.kq-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.kq-q-text { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.45; margin-bottom: 14px; }
+.kq-options { display: flex; flex-direction: column; gap: 7px; }
+.kq-option {
+  padding: 10px 14px; border-radius: 9px; font-size: 13px; line-height: 1.45;
+  border: 1.5px solid var(--line); color: var(--ink-3);
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.kq-option.is-correct { border-color: var(--green); background: var(--green-tint); color: var(--ink); font-weight: 600; }
+.opt-letter {
+  min-width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center;
+  font-size: 11px; font-weight: 700; background: var(--line); color: var(--ink-mute);
+  flex-shrink: 0; margin-top: 1px;
+}
+.is-correct .opt-letter { background: var(--green); color: #fff; }
+.kq-exp-text { margin-top: 12px; padding: 10px 14px; background: var(--green-tint); border: 1px solid #A7F3D0; border-radius: 9px; font-size: 12px; color: var(--ink-3); line-height: 1.55; }
+
+/* ── OVERZICHT ── */
+.summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 36px; }
+.summary-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+.summary-role { font-size: 24px; font-weight: 800; color: var(--accent-ink); letter-spacing: -.02em; }
+.summary-name { font-size: 12px; font-weight: 600; color: var(--ink-3); margin: 2px 0 10px; line-height: 1.3; }
+.summary-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-mute); padding: 5px 0; border-top: 1px solid var(--line); }
+.summary-row span { font-weight: 700; color: var(--ink-2); }
+
+.level-table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+.level-table th { text-align: left; padding: 8px 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-mute); background: var(--bg); border-bottom: 1px solid var(--line); }
+.level-table td { padding: 10px 14px; border-bottom: 1px solid #F3F4F6; }
+.level-table tr:last-child td { border-bottom: none; }
+
+@media print {
+  .topbar, .role-bar { display: none !important; }
+  .section-panel { display: block !important; }
+  .kq-card { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- stubs die app.js nodig heeft bij initialisatie -->
+<div id="rolesGrid" style="display:none"></div>
+<div id="themeGrid" style="display:none"></div>
+<div id="tbCenter"  style="display:none"></div>
+<div id="tbEnd"     style="display:none"></div>
+
+<!-- ── TOPBAR ── -->
+<header class="topbar">
+  <div class="logo">MondriAI <span>Vragenbank</span></div>
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('stellingen')">Zelfscan stellingen</button>
+    <button class="tab-btn"        onclick="switchTab('kennischeck')">Kennischeck vragen</button>
+    <button class="tab-btn"        onclick="switchTab('overzicht')">Overzicht</button>
+  </nav>
+</header>
+
+<!-- ── ROL SELECTOR ── -->
+<div class="role-bar" id="roleBar">
+  <div class="role-bar-label">Rol:</div>
+  <div id="roleCards"></div>
+</div>
+
+<div class="page-body">
+  <div id="panel-stellingen" class="section-panel active"></div>
+  <div id="panel-kennischeck" class="section-panel"></div>
+  <div id="panel-overzicht"   class="section-panel"></div>
+</div>
+
+<script src="app.js"></script>
+<script>
+const LETTERS = ['A','B','C','D'];
+let currentRole = 'OP';
+let currentTab  = 'stellingen';
+
+// ── TABS ──────────────────────────────────────────────
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', ['stellingen','kennischeck','overzicht'][i] === tab);
+  });
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  // Verberg rol-balk op overzicht (toont toch alle rollen)
+  document.getElementById('roleBar').classList.toggle('hidden', tab === 'overzicht');
+  renderCurrent();
+}
+
+// ── ROL WISSELEN ──────────────────────────────────────
+function switchRole(role) {
+  currentRole = role;
+  document.querySelectorAll('.role-card-btn').forEach(b => b.classList.toggle('active', b.dataset.role === role));
+  renderCurrent();
+}
+
+function renderCurrent() {
+  if (currentTab === 'stellingen') renderStellingen(currentRole);
+  if (currentTab === 'kennischeck') renderKennischeck(currentRole);
+  if (currentTab === 'overzicht') renderOverzicht();
+}
+
+// ── ROL KAARTJES ─────────────────────────────────────
+function initRoleCards() {
+  const wrap = document.getElementById('roleCards');
+  wrap.style.cssText = 'display:flex;gap:10px;flex:1';
+  wrap.innerHTML = Object.entries(ROLES).map(([k, r]) => `
+    <button class="role-card-btn${k===currentRole?' active':''}" data-role="${k}" onclick="switchRole('${k}')">
+      <div class="rc-code">${k}</div>
+      <div class="rc-name">${r.name}</div>
+    </button>`).join('');
+}
+
+// ── ZELFSCAN STELLINGEN ───────────────────────────────
+function renderStellingen(role) {
+  const doms  = Object.keys(Q[role]);
+  const flatQ = buildQ(role);
+  const panel = document.getElementById('panel-stellingen');
+  const roleName = ROLES[role].name;
+
+  let html = `<div class="panel-header">
+    <div class="panel-title">Zelfscan stellingen</div>
+    <div class="panel-role-badge">${role} — ${roleName}</div>
+    <div class="panel-count">${flatQ.length} stellingen in totaal</div>
+  </div>`;
+
+  doms.forEach(dom => {
+    const domQs = flatQ.map((q, i) => ({...q, _seq: i+1})).filter(q => q.dom === dom);
+    const label  = DOM_LABELS[role][dom];
+
+    html += `<div class="domain-block">
+      <div class="domain-head">
+        <span class="domain-icon">${DOM_ICONS[dom]}</span>
+        <span class="domain-title">${label}</span>
+        <span class="domain-count">${domQs.length} stellingen</span>
+      </div>
+      <table class="stelling-table">
+        <thead><tr>
+          <th style="width:36px">#</th>
+          <th style="width:72px">Niveau</th>
+          <th style="width:130px">Vlaggen</th>
+          <th>Stelling</th>
+        </tr></thead>
+        <tbody>
+          ${domQs.map(q => {
+            const flags = [];
+            if (q.aiGate) flags.push('<span class="flag flag-gate">⚡ aiGate</span>');
+            if (q.ai)     flags.push('<span class="flag flag-ai">🤖 AI</span>');
+            return `<tr>
+              <td class="stelling-num">${q._seq}</td>
+              <td><span class="lv-badge lv-${q.lv}">${q.lv}</span></td>
+              <td style="white-space:nowrap">${flags.join(' ') || '<span style="color:var(--ink-mute)">—</span>'}</td>
+              <td class="stelling-text">${q.t}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  });
+
+  panel.innerHTML = html;
+}
+
+// ── KENNISCHECK VRAGEN ────────────────────────────────
+function renderKennischeck(role) {
+  const doms  = Object.keys(KQ[role]);
+  const panel = document.getElementById('panel-kennischeck');
+  const roleName = ROLES[role].name;
+  const totalQ = doms.reduce((s, d) => s + KQ[role][d].length, 0);
+
+  let html = `<div class="panel-header">
+    <div class="panel-title">Kennischeck vragen</div>
+    <div class="panel-role-badge">${role} — ${roleName}</div>
+    <div class="panel-count">${totalQ} vragen in totaal · juiste antwoord groen gemarkeerd</div>
+  </div>`;
+
+  doms.forEach(dom => {
+    const questions = KQ[role][dom];
+    const label = DOM_LABELS[role][dom];
+
+    html += `<div class="domain-block">
+      <div class="domain-head">
+        <span class="domain-icon">${DOM_ICONS[dom]}</span>
+        <span class="domain-title">${label}</span>
+        <span class="domain-count">${questions.length} vragen</span>
+      </div>
+      <div class="kq-grid">
+        ${questions.map(kq => `
+          <div class="kq-card">
+            <div class="kq-card-head">
+              <span class="lv-badge lv-${kq.lv}">${kq.lv}</span>
+            </div>
+            <div class="kq-q-text">${kq.q}</div>
+            <div class="kq-options">
+              ${kq.opts.map((opt, i) => `
+                <div class="kq-option${i===kq.c?' is-correct':''}">
+                  <div class="opt-letter">${LETTERS[i]}</div>
+                  <div>${opt}</div>
+                </div>`).join('')}
+            </div>
+            <div class="kq-exp-text">${kq.exp}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  });
+
+  panel.innerHTML = html;
+}
+
+// ── OVERZICHT ─────────────────────────────────────────
+function renderOverzicht() {
+  const panel = document.getElementById('panel-overzicht');
+
+  const summaryCards = Object.keys(ROLES).map(role => {
+    const flatQ   = buildQ(role);
+    const kqTotal = Object.values(KQ[role]).reduce((s, arr) => s + arr.length, 0);
+    const aiGateQ = flatQ.filter(q => q.aiGate).length;
+    const aiQ     = flatQ.filter(q => q.ai).length;
+    return `<div class="summary-card">
+      <div class="summary-role">${role}</div>
+      <div class="summary-name">${ROLES[role].name}</div>
+      <div class="summary-row">Zelfscan stellingen <span>${flatQ.length}</span></div>
+      <div class="summary-row">Kennischeck vragen <span>${kqTotal}</span></div>
+      <div class="summary-row">AI-gate vragen <span>${aiGateQ}</span></div>
+      <div class="summary-row">AI-afhankelijke stellingen <span>${aiQ}</span></div>
+    </div>`;
+  }).join('');
+
+  // Niveau-verdeling per domein (voor alle rollen)
+  let domTables = '';
+  Object.keys(ROLES).forEach(role => {
+    const flatQ = buildQ(role);
+    const doms  = Object.keys(Q[role]);
+    domTables += `<h3 style="font-size:14px;font-weight:700;color:var(--ink-3);margin:28px 0 10px;letter-spacing:.01em">${role} — ${ROLES[role].name}</h3>`;
+    domTables += `<table class="level-table" style="margin-bottom:8px">
+      <thead><tr>
+        <th>Domein</th>
+        <th style="width:80px;text-align:center">A1</th>
+        <th style="width:80px;text-align:center">A2</th>
+        <th style="width:80px;text-align:center">B1</th>
+        <th style="width:80px;text-align:center">B2</th>
+        <th style="width:80px;text-align:center">Totaal</th>
+      </tr></thead>
+      <tbody>
+        ${doms.map(dom => {
+          const label = DOM_LABELS[role][dom];
+          const counts = ['A1','A2','B1','B2'].map(lv => Q[role][dom].filter(q => q.lv === lv).length);
+          const total  = counts.reduce((s,n) => s+n, 0);
+          return `<tr>
+            <td style="font-weight:600">${DOM_ICONS[dom]} ${label}</td>
+            ${counts.map((n,i) => `<td style="text-align:center"><span class="lv-badge lv-${'A1A2B1B2'.slice(i*2,i*2+2)}">${n}</span></td>`).join('')}
+            <td style="text-align:center;font-weight:700;color:var(--ink)">${total}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>`;
+  });
+
+  panel.innerHTML = `
+    <div class="panel-header"><div class="panel-title">Overzicht</div></div>
+    <div class="summary-grid">${summaryCards}</div>
+    <h2 style="font-size:17px;font-weight:800;color:var(--ink);margin-bottom:4px">Niveau-verdeling per rol en domein</h2>
+    <p style="font-size:13px;color:var(--ink-mute);margin-bottom:16px">Aantal stellingen per niveau (zelfscan)</p>
+    ${domTables}`;
+}
+
+// ── INIT ──────────────────────────────────────────────
+initRoleCards();
+renderStellingen(currentRole);
+</script>
+</body>
+</html>
